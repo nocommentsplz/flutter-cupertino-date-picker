@@ -23,28 +23,37 @@ class DatePickerTitleWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (pickerTheme.title != null) {
-      return pickerTheme.title;
-    }
+    //Commented by Abhilash
+    //This code prevents Done and Cancel button from being displayed
+    //if custom title is supplied.
+
+    // if (pickerTheme.title != null) {
+    //   return pickerTheme.title;
+    // }
     return Container(
       height: pickerTheme.titleHeight,
       decoration: BoxDecoration(color: pickerTheme.backgroundColor),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          Container(
-            height: pickerTheme.titleHeight,
-            child: FlatButton(
-                child: _renderCancelWidget(context),
-                onPressed: () => this.onCancel()),
+        children: <Widget>[]
+          ..add(
+            Container(
+              height: pickerTheme.titleHeight,
+              child: FlatButton(
+                  child: _renderCancelWidget(context),
+                  onPressed: () => this.onCancel()),
+            ),
+          )
+          //Added by Abhilash. Show title in the middle of Cancel and Done button
+          ..addAll(pickerTheme.title != null ? [pickerTheme.title] : [])
+          ..add(
+            Container(
+              height: pickerTheme.titleHeight,
+              child: FlatButton(
+                  child: _renderConfirmWidget(context),
+                  onPressed: () => this.onConfirm()),
+            ),
           ),
-          Container(
-            height: pickerTheme.titleHeight,
-            child: FlatButton(
-                child: _renderConfirmWidget(context),
-                onPressed: () => this.onConfirm()),
-          ),
-        ],
       ),
     );
   }
